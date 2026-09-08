@@ -8,3 +8,13 @@ frontend/node_modules
 frontend/playwright-report
 frontend/test-results
 node_modules
+
+# Local configuration and generated environments
+**/.env
+**/.env.*
+!**/.env.example
+**/.venv/
+**/__pycache__/
+**/.mypy_cache/
+**/.ruff_cache/
+**/.coverage
