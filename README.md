@@ -1,88 +1,106 @@
-# Full Stack FastAPI Template
+# Avrixo AI SaaS
 
-[![Test Docker Compose](../../actions/workflows/test-docker-compose.yml/badge.svg)](../../actions/workflows/test-docker-compose.yml)
-[![Test Backend](../../actions/workflows/test-backend.yml/badge.svg)](../../actions/workflows/test-backend.yml)
+### Multi-Tenant AI Operations Platform
 
-## Technology Stack and Features
+A production-oriented AI SaaS reference implementation combining FastAPI,
+PostgreSQL, React, workspace isolation, typed AI workflows, provider abstraction,
+execution tracking, testing, and containerized deployment.
 
-- ⚡ [**FastAPI**](https://fastapi.tiangolo.com) for the Python backend API.
-  - 🧰 [SQLModel](https://sqlmodel.tiangolo.com) for the Python SQL database interactions (ORM).
-  - 🔍 [Pydantic](https://docs.pydantic.dev), used by FastAPI, for the data validation and settings management.
-  - 💾 [PostgreSQL](https://www.postgresql.org) as the SQL database.
-- 🚀 [React](https://react.dev) for the frontend.
-  - 🧩 Built into the backend application and served by FastAPI on the same domain as the API.
-  - 💃 Using TypeScript, hooks, [Vite](https://vitejs.dev), and other parts of a modern frontend stack.
-  - 🎨 [Tailwind CSS](https://tailwindcss.com) and [shadcn/ui](https://ui.shadcn.com) for the frontend components.
-  - 🤖 An automatically generated frontend client.
-  - 🧪 [Playwright](https://playwright.dev) for end-to-end testing.
-  - 🦇 Dark mode support.
-- ☁️ [FastAPI Cloud](https://fastapicloud.com) for deployment.
-- 🐋 [Docker Compose](https://www.docker.com) for local services and self-hosted deployment.
-  - 📞 [Traefik](https://traefik.io) as a reverse proxy with automatic HTTPS.
-- 🔒 Secure password hashing by default.
-- 🔑 JWT (JSON Web Token) authentication.
-- 📫 Email-based password recovery.
-- ✉️ [React Email](https://react.email) for email templates.
-- 📬 [Mailpit](https://mailpit.axllent.org) for local email testing during development.
-- ✅ Tests with [Pytest](https://pytest.org).
-- 🏭 CI (continuous integration) and CD (continuous deployment) based on GitHub Actions.
+## Upstream & Fork Scope
 
-### Dashboard Login
+This project is a customized derivative of [FastAPI’s Full Stack FastAPI Template](https://github.com/fastapi/full-stack-fastapi-template).
 
-![Dashboard login screenshot](img/login.png)
+The original project, inherited architecture, Git history, and upstream
+implementation remain credited to the original authors and contributors.
+Avrixo-specific engineering work is documented in [FORK_CHANGES.md](FORK_CHANGES.md)
+and [UPSTREAM.md](UPSTREAM.md). The [MIT license](LICENSE) and original copyright are preserved.
 
-### Dashboard - Admin
+## What This Fork Adds
 
-![Admin dashboard screenshot](img/dashboard.png)
+- Workspace and member data models with owner, admin and member roles.
+- Workspace-scoped authorization, including for platform administrators.
+- Typed workflow configuration, editor, status controls and model selection.
+- An AI provider interface and a bounded OpenAI-compatible HTTP adapter.
+- Persisted execution states, outputs, latency, safe errors and nullable token usage.
+- Idempotent admission, per-workspace daily limits and concurrent execution limits.
+- PostgreSQL constraints tying each execution to its workflow’s workspace.
+- Database-backed dashboard, workspace overview, members, workflow runner and execution history UI.
+- Tenant-isolation, role, provider, persistence and concurrency tests using fake providers.
+- A real browser E2E flow with a separate test-only provider; no paid AI calls in CI.
+- Generated TypeScript API contracts, migration validation, static checks and secret-pattern checks.
 
-### Dashboard - Items
+## Start locally
 
-![Items dashboard screenshot](img/dashboard-items.png)
+Prerequisites: Python 3.14, uv, Bun 1.3.12, Docker Compose and Git.
 
-### Dashboard - Dark Mode
+```bash
+git clone https://github.com/arees412/avrixo-ai-saas.git
+cd avrixo-ai-saas
+git switch feat/avrixo-ai-saas
+python scripts/setup_env.py
+docker compose up -d --wait db mailpit
+uv sync --frozen --all-packages
+bun ci
+cd backend
+uv run alembic upgrade head
+uv run python -m app.initial_data
+uv run fastapi dev
+```
 
-![Dark mode dashboard screenshot](img/dashboard-dark.png)
+In a second terminal:
 
-### React Email Templates
+```bash
+cp frontend/.env.example frontend/.env
+bun run dev
+```
 
-![Email templates screenshot](img/react-email.png)
+Open http://localhost:5173. The generated local `.env` contains the initial
+administrator credentials. It is ignored by Git. Configure `AI_BASE_URL`,
+`AI_API_KEY`, and `AI_DEFAULT_MODEL` there before running a real workflow.
+The model must support chat completions, temperature and `max_tokens`.
 
-### Mailpit - Local Email Testing
+See [development](docs/development.md) for Windows commands, tests, Docker,
+provider setup and reproducible client generation.
 
-![Mailpit screenshot](img/mailpit.png)
+## Design
 
-### Interactive API Documentation
+```mermaid
+flowchart LR
+  User --> React[React workspace application]
+  React --> API[FastAPI typed API]
+  API --> Auth[JWT and workspace membership]
+  Auth --> Service[Execution service]
+  Service --> Adapter[AI provider interface]
+  Adapter --> Provider[OpenAI-compatible endpoint]
+  Service --> DB[(PostgreSQL)]
+  Auth --> DB
+```
 
-![API docs](img/docs.png)
+See [architecture](docs/architecture.md) for tenancy, authorization, database
+constraints, admission locking, lifecycle, failure handling and tradeoffs.
 
-## How to Use It
+## Engineering boundaries
 
-Click the **Use this template** button at the top of this page to create a new repository.
+This is a reference implementation, not a claim of production customers,
+enterprise certification, performance benchmarks or deployment readiness.
+Execution is synchronous with durable status checkpoints; it is not a durable
+background job queue. Provider credentials are managed per deployment, not per
+workspace. Only the OpenAI-compatible adapter is implemented.
 
-## Backend Development
+Usage limits govern admitted execution counts and output token requests; they
+are not billing, currency budgets or guaranteed provider-side cost caps.
+Reported tokens are summed only when the provider supplies usage.
 
-Backend docs: [backend/README.md](./backend/README.md).
+Workspace isolation is enforced in application services/routes and relational
+constraints, not PostgreSQL row-level security. Members of a workspace can read
+its prompts and outputs. Operators must choose retention, backup, abuse-control
+and provider-data policies before deploying. Interrupted runs require operator
+reconciliation; they are never automatically retried against a paid provider.
 
-## Frontend Development
+## Inherited foundation
 
-Frontend docs: [frontend/README.md](./frontend/README.md).
-
-## Deployment
-
-FastAPI Cloud deployment: [deployment.md](./deployment.md).
-
-Self-hosted deployment with Docker Compose: [deployment-docker-compose.md](./deployment-docker-compose.md).
-
-## Development
-
-General development docs: [development.md](./development.md).
-
-This includes the local FastAPI and Vite workflow, Docker Compose services, `.env` configuration, and more.
-
-## Release Notes
-
-Check the file [release-notes.md](./release-notes.md).
-
-## License
-
-The Full Stack FastAPI Template is licensed under the terms of the MIT license.
+Authentication, password recovery, user administration, the generic Item demo,
+base UI components, generated-client infrastructure, email templates and base
+container architecture originated upstream. The Item demo remains accessible
+at `/items` for compatibility; the product sidebar focuses on Workspaces.
+Avrixo does not claim original authorship of that inherited code.
