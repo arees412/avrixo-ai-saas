@@ -18,6 +18,10 @@ import { Route as LayoutIndexRouteImport } from './routes/_layout/index'
 import { Route as LayoutAdminRouteImport } from './routes/_layout/admin'
 import { Route as LayoutItemsRouteImport } from './routes/_layout/items'
 import { Route as LayoutSettingsRouteImport } from './routes/_layout/settings'
+import { Route as LayoutExecutionsExecutionIdRouteImport } from './routes/_layout/executions/$executionId'
+import { Route as LayoutWorkflowsWorkflowIdRouteImport } from './routes/_layout/workflows/$workflowId'
+import { Route as LayoutWorkspacesIndexRouteImport } from './routes/_layout/workspaces/index'
+import { Route as LayoutWorkspacesWorkspaceIdRouteImport } from './routes/_layout/workspaces/$workspaceId'
 
 const LayoutRoute = LayoutRouteImport.update({
   id: '/_layout',
@@ -63,6 +67,29 @@ const LayoutSettingsRoute = LayoutSettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutExecutionsExecutionIdRoute =
+  LayoutExecutionsExecutionIdRouteImport.update({
+    id: '/executions/$executionId',
+    path: '/executions/$executionId',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+const LayoutWorkflowsWorkflowIdRoute =
+  LayoutWorkflowsWorkflowIdRouteImport.update({
+    id: '/workflows/$workflowId',
+    path: '/workflows/$workflowId',
+    getParentRoute: () => LayoutRoute,
+  } as any)
+const LayoutWorkspacesIndexRoute = LayoutWorkspacesIndexRouteImport.update({
+  id: '/workspaces/',
+  path: '/workspaces/',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutWorkspacesWorkspaceIdRoute =
+  LayoutWorkspacesWorkspaceIdRouteImport.update({
+    id: '/workspaces/$workspaceId',
+    path: '/workspaces/$workspaceId',
+    getParentRoute: () => LayoutRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof LayoutIndexRoute
@@ -73,6 +100,10 @@ export interface FileRoutesByFullPath {
   '/admin': typeof LayoutAdminRoute
   '/items': typeof LayoutItemsRoute
   '/settings': typeof LayoutSettingsRoute
+  '/executions/$executionId': typeof LayoutExecutionsExecutionIdRoute
+  '/workflows/$workflowId': typeof LayoutWorkflowsWorkflowIdRoute
+  '/workspaces/$workspaceId': typeof LayoutWorkspacesWorkspaceIdRoute
+  '/workspaces/': typeof LayoutWorkspacesIndexRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
@@ -83,6 +114,10 @@ export interface FileRoutesByTo {
   '/items': typeof LayoutItemsRoute
   '/settings': typeof LayoutSettingsRoute
   '/': typeof LayoutIndexRoute
+  '/executions/$executionId': typeof LayoutExecutionsExecutionIdRoute
+  '/workflows/$workflowId': typeof LayoutWorkflowsWorkflowIdRoute
+  '/workspaces/$workspaceId': typeof LayoutWorkspacesWorkspaceIdRoute
+  '/workspaces': typeof LayoutWorkspacesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -95,6 +130,10 @@ export interface FileRoutesById {
   '/_layout/items': typeof LayoutItemsRoute
   '/_layout/settings': typeof LayoutSettingsRoute
   '/_layout/': typeof LayoutIndexRoute
+  '/_layout/executions/$executionId': typeof LayoutExecutionsExecutionIdRoute
+  '/_layout/workflows/$workflowId': typeof LayoutWorkflowsWorkflowIdRoute
+  '/_layout/workspaces/$workspaceId': typeof LayoutWorkspacesWorkspaceIdRoute
+  '/_layout/workspaces/': typeof LayoutWorkspacesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -107,6 +146,10 @@ export interface FileRouteTypes {
     | '/admin'
     | '/items'
     | '/settings'
+    | '/executions/$executionId'
+    | '/workflows/$workflowId'
+    | '/workspaces/$workspaceId'
+    | '/workspaces/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/login'
@@ -117,6 +160,10 @@ export interface FileRouteTypes {
     | '/items'
     | '/settings'
     | '/'
+    | '/executions/$executionId'
+    | '/workflows/$workflowId'
+    | '/workspaces/$workspaceId'
+    | '/workspaces'
   id:
     | '__root__'
     | '/_layout'
@@ -128,6 +175,10 @@ export interface FileRouteTypes {
     | '/_layout/items'
     | '/_layout/settings'
     | '/_layout/'
+    | '/_layout/executions/$executionId'
+    | '/_layout/workflows/$workflowId'
+    | '/_layout/workspaces/$workspaceId'
+    | '/_layout/workspaces/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -203,6 +254,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutSettingsRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/executions/$executionId': {
+      id: '/_layout/executions/$executionId'
+      path: '/executions/$executionId'
+      fullPath: '/executions/$executionId'
+      preLoaderRoute: typeof LayoutExecutionsExecutionIdRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/workflows/$workflowId': {
+      id: '/_layout/workflows/$workflowId'
+      path: '/workflows/$workflowId'
+      fullPath: '/workflows/$workflowId'
+      preLoaderRoute: typeof LayoutWorkflowsWorkflowIdRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/workspaces/': {
+      id: '/_layout/workspaces/'
+      path: '/workspaces'
+      fullPath: '/workspaces/'
+      preLoaderRoute: typeof LayoutWorkspacesIndexRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/workspaces/$workspaceId': {
+      id: '/_layout/workspaces/$workspaceId'
+      path: '/workspaces/$workspaceId'
+      fullPath: '/workspaces/$workspaceId'
+      preLoaderRoute: typeof LayoutWorkspacesWorkspaceIdRouteImport
+      parentRoute: typeof LayoutRoute
+    }
   }
 }
 
@@ -211,6 +290,10 @@ interface LayoutRouteChildren {
   LayoutItemsRoute: typeof LayoutItemsRoute
   LayoutSettingsRoute: typeof LayoutSettingsRoute
   LayoutIndexRoute: typeof LayoutIndexRoute
+  LayoutExecutionsExecutionIdRoute: typeof LayoutExecutionsExecutionIdRoute
+  LayoutWorkflowsWorkflowIdRoute: typeof LayoutWorkflowsWorkflowIdRoute
+  LayoutWorkspacesWorkspaceIdRoute: typeof LayoutWorkspacesWorkspaceIdRoute
+  LayoutWorkspacesIndexRoute: typeof LayoutWorkspacesIndexRoute
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
@@ -218,6 +301,10 @@ const LayoutRouteChildren: LayoutRouteChildren = {
   LayoutItemsRoute: LayoutItemsRoute,
   LayoutSettingsRoute: LayoutSettingsRoute,
   LayoutIndexRoute: LayoutIndexRoute,
+  LayoutExecutionsExecutionIdRoute: LayoutExecutionsExecutionIdRoute,
+  LayoutWorkflowsWorkflowIdRoute: LayoutWorkflowsWorkflowIdRoute,
+  LayoutWorkspacesWorkspaceIdRoute: LayoutWorkspacesWorkspaceIdRoute,
+  LayoutWorkspacesIndexRoute: LayoutWorkspacesIndexRoute,
 }
 
 const LayoutRouteWithChildren =

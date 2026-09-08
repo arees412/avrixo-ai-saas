@@ -1,17 +1,15 @@
-import { FaGithub, FaLinkedinIn } from "react-icons/fa"
-import { FaXTwitter } from "react-icons/fa6"
+import { FaGithub } from "react-icons/fa"
 
 const socialLinks = [
   {
     icon: FaGithub,
-    href: "https://github.com/fastapi/fastapi",
-    label: "GitHub",
+    href: "https://github.com/arees412/avrixo-ai-saas",
+    label: "Avrixo AI SaaS source",
   },
-  { icon: FaXTwitter, href: "https://x.com/fastapi", label: "X" },
   {
-    icon: FaLinkedinIn,
-    href: "https://linkedin.com/company/fastapi",
-    label: "LinkedIn",
+    icon: FaGithub,
+    href: "https://github.com/fastapi/full-stack-fastapi-template",
+    label: "Upstream template",
   },
 ]
 
@@ -22,7 +20,7 @@ export function Footer() {
     <footer className="border-t py-4 px-6">
       <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
         <p className="text-muted-foreground text-sm">
-          Full Stack FastAPI Template - {currentYear}
+          Avrixo AI SaaS · MIT-licensed template fork · {currentYear}
         </p>
         <div className="flex items-center gap-4">
           {socialLinks.map(({ icon: Icon, href, label }) => (
