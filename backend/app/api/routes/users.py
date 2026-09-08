@@ -24,6 +24,7 @@ from app.models import (
     UserUpdate,
     UserUpdateMe,
 )
+from app.operations.models import Workspace
 from app.utils import generate_new_account_email, send_email
 
 router = APIRouter(prefix="/users", tags=["users"])
@@ -138,6 +139,10 @@ def delete_user_me(session: SessionDep, current_user: CurrentUser) -> Any:
         raise HTTPException(
             status_code=403, detail="Super users are not allowed to delete themselves"
         )
+    if session.exec(
+        select(Workspace).where(Workspace.owner_id == current_user.id)
+    ).first():
+        raise HTTPException(409, "Workspace owners cannot delete their account")
     session.delete(current_user)
     session.commit()
     return Message(message="User deleted successfully")
@@ -225,6 +230,8 @@ def delete_user(
         raise HTTPException(
             status_code=403, detail="Super users are not allowed to delete themselves"
         )
+    if session.exec(select(Workspace).where(Workspace.owner_id == user_id)).first():
+        raise HTTPException(409, "Workspace owners cannot be deleted")
     statement = delete(Item).where(col(Item.owner_id) == user_id)
     session.exec(statement)
     session.delete(user)
