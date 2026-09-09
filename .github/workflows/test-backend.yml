@@ -3,7 +3,7 @@ name: Test Backend
 on:
   push:
     branches:
-      - master
+      - main
   pull_request:
 permissions:
   contents: read
@@ -25,10 +25,14 @@ jobs:
         uses: astral-sh/setup-uv@20cfd1bf945f4377ade1205e4dbc17946fc9a30d # v10.0.1
         with:
           version: "latest-known"
+      - run: python scripts/setup_env.py
       - run: docker compose down -v --remove-orphans
       - run: docker compose up -d --wait db mailpit
       - name: Migrate DB
         run: uv run bash scripts/prestart.sh
+        working-directory: backend
+      - name: Check migration drift
+        run: uv run alembic check
         working-directory: backend
       - name: Run tests
         run: uv run bash scripts/tests-start.sh "Coverage for ${{ github.sha }}"

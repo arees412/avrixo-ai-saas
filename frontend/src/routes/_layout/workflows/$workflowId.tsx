@@ -17,12 +17,19 @@ export const Route = createFileRoute("/_layout/workflows/$workflowId")({
   head: () => ({ meta: [{ title: "Run workflow | Avrixo AI SaaS" }] }),
 })
 
+function createRequestKey() {
+  const bytes = crypto.getRandomValues(new Uint8Array(16))
+  return Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join(
+    "",
+  )
+}
+
 function WorkflowPage() {
   const { workflowId } = Route.useParams()
   const navigate = useNavigate()
   const [editing, setEditing] = useState(false)
   const [input, setInput] = useState("")
-  const [requestKey, setRequestKey] = useState(() => crypto.randomUUID())
+  const [requestKey, setRequestKey] = useState(createRequestKey)
   const flow = useQuery({
     queryKey: ["operations", "workflow", workflowId],
     queryFn: async () =>
@@ -128,7 +135,7 @@ function WorkflowPage() {
               value={input}
               onChange={(e) => {
                 setInput(e.target.value)
-                setRequestKey(crypto.randomUUID())
+                setRequestKey(createRequestKey())
               }}
             />
             <p className="text-xs text-muted-foreground">
