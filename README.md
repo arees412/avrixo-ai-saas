@@ -36,7 +36,6 @@ Prerequisites: Python 3.14, uv, Bun 1.3.12, Docker Compose and Git.
 ```bash
 git clone https://github.com/arees412/avrixo-ai-saas.git
 cd avrixo-ai-saas
-git switch feat/avrixo-ai-saas
 python scripts/setup_env.py
 docker compose up -d --wait db mailpit
 uv sync --frozen --all-packages
