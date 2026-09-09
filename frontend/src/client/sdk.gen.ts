@@ -2,7 +2,7 @@
 
 import { type Client, type Options as Options2, type TDataShape, urlSearchParamsBodySerializer } from './client';
 import { client } from './client.gen';
-import type { itemsCreateItemData, itemsCreateItemErrors, itemsCreateItemResponses, itemsDeleteItemData, itemsDeleteItemErrors, itemsDeleteItemResponses, itemsReadItemData, itemsReadItemErrors, itemsReadItemResponses, itemsReadItemsData, itemsReadItemsErrors, itemsReadItemsResponses, itemsUpdateItemData, itemsUpdateItemErrors, itemsUpdateItemResponses, loginLoginAccessTokenData, loginLoginAccessTokenErrors, loginLoginAccessTokenResponses, loginRecoverPasswordData, loginRecoverPasswordErrors, loginRecoverPasswordHtmlContentData, loginRecoverPasswordHtmlContentErrors, loginRecoverPasswordHtmlContentResponses, loginRecoverPasswordResponses, loginResetPasswordData, loginResetPasswordErrors, loginResetPasswordResponses, loginTestTokenData, loginTestTokenResponses, privateCreateUserData, privateCreateUserErrors, privateCreateUserResponses, usersCreateUserData, usersCreateUserErrors, usersCreateUserResponses, usersDeleteUserData, usersDeleteUserErrors, usersDeleteUserMeData, usersDeleteUserMeResponses, usersDeleteUserResponses, usersReadUserByIdData, usersReadUserByIdErrors, usersReadUserByIdResponses, usersReadUserMeData, usersReadUserMeResponses, usersReadUsersData, usersReadUsersErrors, usersReadUsersResponses, usersRegisterUserData, usersRegisterUserErrors, usersRegisterUserResponses, usersUpdatePasswordMeData, usersUpdatePasswordMeErrors, usersUpdatePasswordMeResponses, usersUpdateUserData, usersUpdateUserErrors, usersUpdateUserMeData, usersUpdateUserMeErrors, usersUpdateUserMeResponses, usersUpdateUserResponses, utilsHealthCheckData, utilsHealthCheckResponses, utilsTestEmailData, utilsTestEmailErrors, utilsTestEmailResponses } from './types.gen';
+import type { itemsCreateItemData, itemsCreateItemErrors, itemsCreateItemResponses, itemsDeleteItemData, itemsDeleteItemErrors, itemsDeleteItemResponses, itemsReadItemData, itemsReadItemErrors, itemsReadItemResponses, itemsReadItemsData, itemsReadItemsErrors, itemsReadItemsResponses, itemsUpdateItemData, itemsUpdateItemErrors, itemsUpdateItemResponses, loginLoginAccessTokenData, loginLoginAccessTokenErrors, loginLoginAccessTokenResponses, loginRecoverPasswordData, loginRecoverPasswordErrors, loginRecoverPasswordHtmlContentData, loginRecoverPasswordHtmlContentErrors, loginRecoverPasswordHtmlContentResponses, loginRecoverPasswordResponses, loginResetPasswordData, loginResetPasswordErrors, loginResetPasswordResponses, loginTestTokenData, loginTestTokenResponses, operationsCreateWorkflowData, operationsCreateWorkflowErrors, operationsCreateWorkflowResponses, operationsCreateWorkspaceData, operationsCreateWorkspaceErrors, operationsCreateWorkspaceResponses, operationsExecuteWorkflowData, operationsExecuteWorkflowErrors, operationsExecuteWorkflowResponses, operationsListExecutionsData, operationsListExecutionsErrors, operationsListExecutionsResponses, operationsListMembersData, operationsListMembersErrors, operationsListMembersResponses, operationsListWorkflowsData, operationsListWorkflowsErrors, operationsListWorkflowsResponses, operationsListWorkspacesData, operationsListWorkspacesErrors, operationsListWorkspacesResponses, operationsMetricsData, operationsMetricsErrors, operationsMetricsResponses, operationsProvidersData, operationsProvidersResponses, operationsReadExecutionData, operationsReadExecutionErrors, operationsReadExecutionResponses, operationsReadWorkflowData, operationsReadWorkflowErrors, operationsReadWorkflowResponses, operationsReadWorkspaceData, operationsReadWorkspaceErrors, operationsReadWorkspaceResponses, operationsRemoveMemberData, operationsRemoveMemberErrors, operationsRemoveMemberResponses, operationsSetMemberData, operationsSetMemberErrors, operationsSetMemberResponses, operationsUpdateGovernanceData, operationsUpdateGovernanceErrors, operationsUpdateGovernanceResponses, operationsUpdateWorkflowData, operationsUpdateWorkflowErrors, operationsUpdateWorkflowResponses, privateCreateUserData, privateCreateUserErrors, privateCreateUserResponses, usersCreateUserData, usersCreateUserErrors, usersCreateUserResponses, usersDeleteUserData, usersDeleteUserErrors, usersDeleteUserMeData, usersDeleteUserMeResponses, usersDeleteUserResponses, usersReadUserByIdData, usersReadUserByIdErrors, usersReadUserByIdResponses, usersReadUserMeData, usersReadUserMeResponses, usersReadUsersData, usersReadUsersErrors, usersReadUsersResponses, usersRegisterUserData, usersRegisterUserErrors, usersRegisterUserResponses, usersUpdatePasswordMeData, usersUpdatePasswordMeErrors, usersUpdatePasswordMeResponses, usersUpdateUserData, usersUpdateUserErrors, usersUpdateUserMeData, usersUpdateUserMeErrors, usersUpdateUserMeResponses, usersUpdateUserResponses, utilsHealthCheckData, utilsHealthCheckResponses, utilsTestEmailData, utilsTestEmailErrors, utilsTestEmailResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -17,6 +17,224 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
      */
     meta?: Record<string, unknown>;
 };
+
+export class OperationsService {
+    /**
+     * List Workspaces
+     */
+    public static listWorkspaces<ThrowOnError extends boolean = true>(options?: Options<operationsListWorkspacesData, ThrowOnError>) {
+        return (options?.client ?? client).get<operationsListWorkspacesResponses, operationsListWorkspacesErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/workspaces',
+            ...options
+        });
+    }
+    
+    /**
+     * Create Workspace
+     */
+    public static createWorkspace<ThrowOnError extends boolean = true>(options: Options<operationsCreateWorkspaceData, ThrowOnError>) {
+        return (options.client ?? client).post<operationsCreateWorkspaceResponses, operationsCreateWorkspaceErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/workspaces',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+    
+    /**
+     * Read Workspace
+     */
+    public static readWorkspace<ThrowOnError extends boolean = true>(options: Options<operationsReadWorkspaceData, ThrowOnError>) {
+        return (options.client ?? client).get<operationsReadWorkspaceResponses, operationsReadWorkspaceErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/workspaces/{workspace_id}',
+            ...options
+        });
+    }
+    
+    /**
+     * Update Governance
+     */
+    public static updateGovernance<ThrowOnError extends boolean = true>(options: Options<operationsUpdateGovernanceData, ThrowOnError>) {
+        return (options.client ?? client).patch<operationsUpdateGovernanceResponses, operationsUpdateGovernanceErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/workspaces/{workspace_id}/governance',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+    
+    /**
+     * List Members
+     */
+    public static listMembers<ThrowOnError extends boolean = true>(options: Options<operationsListMembersData, ThrowOnError>) {
+        return (options.client ?? client).get<operationsListMembersResponses, operationsListMembersErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/workspaces/{workspace_id}/members',
+            ...options
+        });
+    }
+    
+    /**
+     * Set Member
+     */
+    public static setMember<ThrowOnError extends boolean = true>(options: Options<operationsSetMemberData, ThrowOnError>) {
+        return (options.client ?? client).put<operationsSetMemberResponses, operationsSetMemberErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/workspaces/{workspace_id}/members',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+    
+    /**
+     * Remove Member
+     */
+    public static removeMember<ThrowOnError extends boolean = true>(options: Options<operationsRemoveMemberData, ThrowOnError>) {
+        return (options.client ?? client).delete<operationsRemoveMemberResponses, operationsRemoveMemberErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/workspaces/{workspace_id}/members/{user_id}',
+            ...options
+        });
+    }
+    
+    /**
+     * List Workflows
+     */
+    public static listWorkflows<ThrowOnError extends boolean = true>(options: Options<operationsListWorkflowsData, ThrowOnError>) {
+        return (options.client ?? client).get<operationsListWorkflowsResponses, operationsListWorkflowsErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/workspaces/{workspace_id}/workflows',
+            ...options
+        });
+    }
+    
+    /**
+     * Create Workflow
+     */
+    public static createWorkflow<ThrowOnError extends boolean = true>(options: Options<operationsCreateWorkflowData, ThrowOnError>) {
+        return (options.client ?? client).post<operationsCreateWorkflowResponses, operationsCreateWorkflowErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/workspaces/{workspace_id}/workflows',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+    
+    /**
+     * Read Workflow
+     */
+    public static readWorkflow<ThrowOnError extends boolean = true>(options: Options<operationsReadWorkflowData, ThrowOnError>) {
+        return (options.client ?? client).get<operationsReadWorkflowResponses, operationsReadWorkflowErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/workflows/{workflow_id}',
+            ...options
+        });
+    }
+    
+    /**
+     * Update Workflow
+     */
+    public static updateWorkflow<ThrowOnError extends boolean = true>(options: Options<operationsUpdateWorkflowData, ThrowOnError>) {
+        return (options.client ?? client).put<operationsUpdateWorkflowResponses, operationsUpdateWorkflowErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/workflows/{workflow_id}',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+    
+    /**
+     * Execute Workflow
+     */
+    public static executeWorkflow<ThrowOnError extends boolean = true>(options: Options<operationsExecuteWorkflowData, ThrowOnError>) {
+        return (options.client ?? client).post<operationsExecuteWorkflowResponses, operationsExecuteWorkflowErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/workflows/{workflow_id}/execute',
+            ...options,
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers
+            }
+        });
+    }
+    
+    /**
+     * List Executions
+     */
+    public static listExecutions<ThrowOnError extends boolean = true>(options: Options<operationsListExecutionsData, ThrowOnError>) {
+        return (options.client ?? client).get<operationsListExecutionsResponses, operationsListExecutionsErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/workspaces/{workspace_id}/executions',
+            ...options
+        });
+    }
+    
+    /**
+     * Read Execution
+     */
+    public static readExecution<ThrowOnError extends boolean = true>(options: Options<operationsReadExecutionData, ThrowOnError>) {
+        return (options.client ?? client).get<operationsReadExecutionResponses, operationsReadExecutionErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/executions/{execution_id}',
+            ...options
+        });
+    }
+    
+    /**
+     * Metrics
+     */
+    public static metrics<ThrowOnError extends boolean = true>(options?: Options<operationsMetricsData, ThrowOnError>) {
+        return (options?.client ?? client).get<operationsMetricsResponses, operationsMetricsErrors, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/operations/metrics',
+            ...options
+        });
+    }
+    
+    /**
+     * Providers
+     */
+    public static providers<ThrowOnError extends boolean = true>(options?: Options<operationsProvidersData, ThrowOnError>) {
+        return (options?.client ?? client).get<operationsProvidersResponses, unknown, ThrowOnError>({
+            responseType: 'json',
+            security: [{ scheme: 'bearer', type: 'http' }],
+            url: '/api/v1/operations/providers',
+            ...options
+        });
+    }
+}
 
 export class LoginService {
     /**

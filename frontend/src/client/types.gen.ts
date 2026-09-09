@@ -35,6 +35,104 @@ export type Body_login_login_access_token = {
 };
 
 /**
+ * ExecuteRequest
+ */
+export type ExecuteRequest = {
+    /**
+     * Input
+     */
+    input: string;
+    /**
+     * Idempotency Key
+     */
+    idempotency_key: string;
+};
+
+/**
+ * ExecutionPublic
+ */
+export type ExecutionPublic = {
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Workflow Id
+     */
+    workflow_id: string;
+    /**
+     * Workspace Id
+     */
+    workspace_id: string;
+    /**
+     * Input
+     */
+    input: string;
+    /**
+     * Output
+     */
+    output: string | null;
+    /**
+     * Provider
+     */
+    provider: string;
+    /**
+     * Model
+     */
+    model: string;
+    /**
+     * Status
+     */
+    status: 'pending' | 'running' | 'completed' | 'failed';
+    /**
+     * Prompt Tokens
+     */
+    prompt_tokens: number | null;
+    /**
+     * Completion Tokens
+     */
+    completion_tokens: number | null;
+    /**
+     * Total Tokens
+     */
+    total_tokens: number | null;
+    /**
+     * Latency Ms
+     */
+    latency_ms: number | null;
+    /**
+     * Error Message
+     */
+    error_message: string | null;
+    /**
+     * Created By
+     */
+    created_by: string | null;
+    /**
+     * Created At
+     */
+    created_at: string;
+    /**
+     * Finished At
+     */
+    finished_at: string | null;
+};
+
+/**
+ * GovernanceUpdate
+ */
+export type GovernanceUpdate = {
+    /**
+     * Daily Execution Limit
+     */
+    daily_execution_limit: number;
+    /**
+     * Max Concurrent Executions
+     */
+    max_concurrent_executions: number;
+};
+
+/**
  * HTTPValidationError
  */
 export type HTTPValidationError = {
@@ -113,6 +211,38 @@ export type ItemsPublic = {
 };
 
 /**
+ * MemberPublic
+ */
+export type MemberPublic = {
+    /**
+     * User Id
+     */
+    user_id: string;
+    /**
+     * Role
+     */
+    role: 'owner' | 'admin' | 'member';
+    /**
+     * Created At
+     */
+    created_at: string;
+};
+
+/**
+ * MemberWrite
+ */
+export type MemberWrite = {
+    /**
+     * User Id
+     */
+    user_id: string;
+    /**
+     * Role
+     */
+    role?: 'admin' | 'member';
+};
+
+/**
  * Message
  */
 export type Message = {
@@ -120,6 +250,40 @@ export type Message = {
      * Message
      */
     message: string;
+};
+
+/**
+ * Metrics
+ */
+export type Metrics = {
+    /**
+     * Workspaces
+     */
+    workspaces: number;
+    /**
+     * Workflows
+     */
+    workflows: number;
+    /**
+     * Executions
+     */
+    executions: number;
+    /**
+     * Successful Executions
+     */
+    successful_executions: number;
+    /**
+     * Failed Executions
+     */
+    failed_executions: number;
+    /**
+     * Total Tokens
+     */
+    total_tokens: number;
+    /**
+     * Executions With Usage
+     */
+    executions_with_usage: number;
 };
 
 /**
@@ -156,6 +320,24 @@ export type PrivateUserCreate = {
      * Is Verified
      */
     is_verified?: boolean;
+};
+
+/**
+ * ProviderPublic
+ */
+export type ProviderPublic = {
+    /**
+     * Id
+     */
+    id?: string;
+    /**
+     * Configured
+     */
+    configured: boolean;
+    /**
+     * Default Model
+     */
+    default_model: string;
 };
 
 /**
@@ -341,6 +523,664 @@ export type ValidationError = {
         [key: string]: unknown;
     };
 };
+
+/**
+ * WorkflowPublic
+ */
+export type WorkflowPublic = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description?: string;
+    /**
+     * System Prompt
+     */
+    system_prompt: string;
+    /**
+     * Provider
+     */
+    provider?: 'openai-compatible';
+    /**
+     * Model
+     */
+    model: string;
+    /**
+     * Temperature
+     */
+    temperature?: number;
+    /**
+     * Max Output Tokens
+     */
+    max_output_tokens?: number;
+    /**
+     * Status
+     */
+    status?: 'active' | 'disabled';
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Workspace Id
+     */
+    workspace_id: string;
+    /**
+     * Created By
+     */
+    created_by: string | null;
+    /**
+     * Created At
+     */
+    created_at: string;
+    /**
+     * Updated At
+     */
+    updated_at: string;
+};
+
+/**
+ * WorkflowWrite
+ */
+export type WorkflowWrite = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Description
+     */
+    description?: string;
+    /**
+     * System Prompt
+     */
+    system_prompt: string;
+    /**
+     * Provider
+     */
+    provider?: 'openai-compatible';
+    /**
+     * Model
+     */
+    model: string;
+    /**
+     * Temperature
+     */
+    temperature?: number;
+    /**
+     * Max Output Tokens
+     */
+    max_output_tokens?: number;
+    /**
+     * Status
+     */
+    status?: 'active' | 'disabled';
+};
+
+/**
+ * WorkspaceCreate
+ */
+export type WorkspaceCreate = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Slug
+     */
+    slug: string;
+};
+
+/**
+ * WorkspacePublic
+ */
+export type WorkspacePublic = {
+    /**
+     * Name
+     */
+    name: string;
+    /**
+     * Slug
+     */
+    slug: string;
+    /**
+     * Id
+     */
+    id: string;
+    /**
+     * Owner Id
+     */
+    owner_id: string;
+    /**
+     * Daily Execution Limit
+     */
+    daily_execution_limit: number;
+    /**
+     * Max Concurrent Executions
+     */
+    max_concurrent_executions: number;
+    /**
+     * Created At
+     */
+    created_at: string;
+    /**
+     * Updated At
+     */
+    updated_at: string;
+    /**
+     * Role
+     */
+    role: 'owner' | 'admin' | 'member';
+};
+
+export type operationsListWorkspacesData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Limit
+         */
+        limit?: number;
+        /**
+         * Offset
+         */
+        offset?: number;
+    };
+    url: '/api/v1/workspaces';
+};
+
+export type operationsListWorkspacesErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type operationsListWorkspacesError = operationsListWorkspacesErrors[keyof operationsListWorkspacesErrors];
+
+export type operationsListWorkspacesResponses = {
+    /**
+     * Response Operations-List Workspaces
+     *
+     * Successful Response
+     */
+    200: Array<WorkspacePublic>;
+};
+
+export type operationsListWorkspacesResponse = operationsListWorkspacesResponses[keyof operationsListWorkspacesResponses];
+
+export type operationsCreateWorkspaceData = {
+    body: WorkspaceCreate;
+    path?: never;
+    query?: never;
+    url: '/api/v1/workspaces';
+};
+
+export type operationsCreateWorkspaceErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type operationsCreateWorkspaceError = operationsCreateWorkspaceErrors[keyof operationsCreateWorkspaceErrors];
+
+export type operationsCreateWorkspaceResponses = {
+    /**
+     * Successful Response
+     */
+    201: WorkspacePublic;
+};
+
+export type operationsCreateWorkspaceResponse = operationsCreateWorkspaceResponses[keyof operationsCreateWorkspaceResponses];
+
+export type operationsReadWorkspaceData = {
+    body?: never;
+    path: {
+        /**
+         * Workspace Id
+         */
+        workspace_id: string;
+    };
+    query?: never;
+    url: '/api/v1/workspaces/{workspace_id}';
+};
+
+export type operationsReadWorkspaceErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type operationsReadWorkspaceError = operationsReadWorkspaceErrors[keyof operationsReadWorkspaceErrors];
+
+export type operationsReadWorkspaceResponses = {
+    /**
+     * Successful Response
+     */
+    200: WorkspacePublic;
+};
+
+export type operationsReadWorkspaceResponse = operationsReadWorkspaceResponses[keyof operationsReadWorkspaceResponses];
+
+export type operationsUpdateGovernanceData = {
+    body: GovernanceUpdate;
+    path: {
+        /**
+         * Workspace Id
+         */
+        workspace_id: string;
+    };
+    query?: never;
+    url: '/api/v1/workspaces/{workspace_id}/governance';
+};
+
+export type operationsUpdateGovernanceErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type operationsUpdateGovernanceError = operationsUpdateGovernanceErrors[keyof operationsUpdateGovernanceErrors];
+
+export type operationsUpdateGovernanceResponses = {
+    /**
+     * Successful Response
+     */
+    200: WorkspacePublic;
+};
+
+export type operationsUpdateGovernanceResponse = operationsUpdateGovernanceResponses[keyof operationsUpdateGovernanceResponses];
+
+export type operationsListMembersData = {
+    body?: never;
+    path: {
+        /**
+         * Workspace Id
+         */
+        workspace_id: string;
+    };
+    query?: {
+        /**
+         * Limit
+         */
+        limit?: number;
+        /**
+         * Offset
+         */
+        offset?: number;
+    };
+    url: '/api/v1/workspaces/{workspace_id}/members';
+};
+
+export type operationsListMembersErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type operationsListMembersError = operationsListMembersErrors[keyof operationsListMembersErrors];
+
+export type operationsListMembersResponses = {
+    /**
+     * Response Operations-List Members
+     *
+     * Successful Response
+     */
+    200: Array<MemberPublic>;
+};
+
+export type operationsListMembersResponse = operationsListMembersResponses[keyof operationsListMembersResponses];
+
+export type operationsSetMemberData = {
+    body: MemberWrite;
+    path: {
+        /**
+         * Workspace Id
+         */
+        workspace_id: string;
+    };
+    query?: never;
+    url: '/api/v1/workspaces/{workspace_id}/members';
+};
+
+export type operationsSetMemberErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type operationsSetMemberError = operationsSetMemberErrors[keyof operationsSetMemberErrors];
+
+export type operationsSetMemberResponses = {
+    /**
+     * Successful Response
+     */
+    200: MemberPublic;
+};
+
+export type operationsSetMemberResponse = operationsSetMemberResponses[keyof operationsSetMemberResponses];
+
+export type operationsRemoveMemberData = {
+    body?: never;
+    path: {
+        /**
+         * Workspace Id
+         */
+        workspace_id: string;
+        /**
+         * User Id
+         */
+        user_id: string;
+    };
+    query?: never;
+    url: '/api/v1/workspaces/{workspace_id}/members/{user_id}';
+};
+
+export type operationsRemoveMemberErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type operationsRemoveMemberError = operationsRemoveMemberErrors[keyof operationsRemoveMemberErrors];
+
+export type operationsRemoveMemberResponses = {
+    /**
+     * Successful Response
+     */
+    200: Message;
+};
+
+export type operationsRemoveMemberResponse = operationsRemoveMemberResponses[keyof operationsRemoveMemberResponses];
+
+export type operationsListWorkflowsData = {
+    body?: never;
+    path: {
+        /**
+         * Workspace Id
+         */
+        workspace_id: string;
+    };
+    query?: {
+        /**
+         * Limit
+         */
+        limit?: number;
+        /**
+         * Offset
+         */
+        offset?: number;
+    };
+    url: '/api/v1/workspaces/{workspace_id}/workflows';
+};
+
+export type operationsListWorkflowsErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type operationsListWorkflowsError = operationsListWorkflowsErrors[keyof operationsListWorkflowsErrors];
+
+export type operationsListWorkflowsResponses = {
+    /**
+     * Response Operations-List Workflows
+     *
+     * Successful Response
+     */
+    200: Array<WorkflowPublic>;
+};
+
+export type operationsListWorkflowsResponse = operationsListWorkflowsResponses[keyof operationsListWorkflowsResponses];
+
+export type operationsCreateWorkflowData = {
+    body: WorkflowWrite;
+    path: {
+        /**
+         * Workspace Id
+         */
+        workspace_id: string;
+    };
+    query?: never;
+    url: '/api/v1/workspaces/{workspace_id}/workflows';
+};
+
+export type operationsCreateWorkflowErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type operationsCreateWorkflowError = operationsCreateWorkflowErrors[keyof operationsCreateWorkflowErrors];
+
+export type operationsCreateWorkflowResponses = {
+    /**
+     * Successful Response
+     */
+    201: WorkflowPublic;
+};
+
+export type operationsCreateWorkflowResponse = operationsCreateWorkflowResponses[keyof operationsCreateWorkflowResponses];
+
+export type operationsReadWorkflowData = {
+    body?: never;
+    path: {
+        /**
+         * Workflow Id
+         */
+        workflow_id: string;
+    };
+    query?: never;
+    url: '/api/v1/workflows/{workflow_id}';
+};
+
+export type operationsReadWorkflowErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type operationsReadWorkflowError = operationsReadWorkflowErrors[keyof operationsReadWorkflowErrors];
+
+export type operationsReadWorkflowResponses = {
+    /**
+     * Successful Response
+     */
+    200: WorkflowPublic;
+};
+
+export type operationsReadWorkflowResponse = operationsReadWorkflowResponses[keyof operationsReadWorkflowResponses];
+
+export type operationsUpdateWorkflowData = {
+    body: WorkflowWrite;
+    path: {
+        /**
+         * Workflow Id
+         */
+        workflow_id: string;
+    };
+    query?: never;
+    url: '/api/v1/workflows/{workflow_id}';
+};
+
+export type operationsUpdateWorkflowErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type operationsUpdateWorkflowError = operationsUpdateWorkflowErrors[keyof operationsUpdateWorkflowErrors];
+
+export type operationsUpdateWorkflowResponses = {
+    /**
+     * Successful Response
+     */
+    200: WorkflowPublic;
+};
+
+export type operationsUpdateWorkflowResponse = operationsUpdateWorkflowResponses[keyof operationsUpdateWorkflowResponses];
+
+export type operationsExecuteWorkflowData = {
+    body: ExecuteRequest;
+    path: {
+        /**
+         * Workflow Id
+         */
+        workflow_id: string;
+    };
+    query?: never;
+    url: '/api/v1/workflows/{workflow_id}/execute';
+};
+
+export type operationsExecuteWorkflowErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type operationsExecuteWorkflowError = operationsExecuteWorkflowErrors[keyof operationsExecuteWorkflowErrors];
+
+export type operationsExecuteWorkflowResponses = {
+    /**
+     * Successful Response
+     */
+    200: ExecutionPublic;
+};
+
+export type operationsExecuteWorkflowResponse = operationsExecuteWorkflowResponses[keyof operationsExecuteWorkflowResponses];
+
+export type operationsListExecutionsData = {
+    body?: never;
+    path: {
+        /**
+         * Workspace Id
+         */
+        workspace_id: string;
+    };
+    query?: {
+        /**
+         * Limit
+         */
+        limit?: number;
+        /**
+         * Offset
+         */
+        offset?: number;
+    };
+    url: '/api/v1/workspaces/{workspace_id}/executions';
+};
+
+export type operationsListExecutionsErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type operationsListExecutionsError = operationsListExecutionsErrors[keyof operationsListExecutionsErrors];
+
+export type operationsListExecutionsResponses = {
+    /**
+     * Response Operations-List Executions
+     *
+     * Successful Response
+     */
+    200: Array<ExecutionPublic>;
+};
+
+export type operationsListExecutionsResponse = operationsListExecutionsResponses[keyof operationsListExecutionsResponses];
+
+export type operationsReadExecutionData = {
+    body?: never;
+    path: {
+        /**
+         * Execution Id
+         */
+        execution_id: string;
+    };
+    query?: never;
+    url: '/api/v1/executions/{execution_id}';
+};
+
+export type operationsReadExecutionErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type operationsReadExecutionError = operationsReadExecutionErrors[keyof operationsReadExecutionErrors];
+
+export type operationsReadExecutionResponses = {
+    /**
+     * Successful Response
+     */
+    200: ExecutionPublic;
+};
+
+export type operationsReadExecutionResponse = operationsReadExecutionResponses[keyof operationsReadExecutionResponses];
+
+export type operationsMetricsData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Workspace Id
+         */
+        workspace_id?: string | null;
+    };
+    url: '/api/v1/operations/metrics';
+};
+
+export type operationsMetricsErrors = {
+    /**
+     * Validation Error
+     */
+    422: HTTPValidationError;
+};
+
+export type operationsMetricsError = operationsMetricsErrors[keyof operationsMetricsErrors];
+
+export type operationsMetricsResponses = {
+    /**
+     * Successful Response
+     */
+    200: Metrics;
+};
+
+export type operationsMetricsResponse = operationsMetricsResponses[keyof operationsMetricsResponses];
+
+export type operationsProvidersData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/api/v1/operations/providers';
+};
+
+export type operationsProvidersResponses = {
+    /**
+     * Response Operations-Providers
+     *
+     * Successful Response
+     */
+    200: Array<ProviderPublic>;
+};
+
+export type operationsProvidersResponse = operationsProvidersResponses[keyof operationsProvidersResponses];
 
 export type loginLoginAccessTokenData = {
     body: Body_login_login_access_token;

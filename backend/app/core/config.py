@@ -3,8 +3,10 @@ from typing import Literal, Self
 
 from pydantic import (
     EmailStr,
+    Field,
     HttpUrl,
     PostgresDsn,
+    SecretStr,
     computed_field,
     field_validator,
     model_validator,
@@ -28,6 +30,38 @@ class Settings(BaseSettings):
 
     PROJECT_NAME: str
     SENTRY_DSN: HttpUrl | None = None
+    AI_BASE_URL: str = ""
+    AI_API_KEY: SecretStr | None = None
+    AI_DEFAULT_MODEL: str = ""
+    AI_TIMEOUT_SECONDS: float = Field(default=45, ge=1, le=120)
+
+    @field_validator("AI_BASE_URL")
+    @classmethod
+    def validate_ai_url(cls, value: str) -> str:
+        from urllib.parse import urlsplit
+
+        if not value:
+            return value
+        url = urlsplit(value)
+        if (
+            url.scheme not in {"http", "https"}
+            or not url.hostname
+            or url.username
+            or url.password
+            or url.query
+            or url.fragment
+        ):
+            raise ValueError(
+                "AI_BASE_URL must be an HTTP(S) endpoint without credentials, query, or fragment"
+            )
+        if url.scheme != "https" and url.hostname not in {
+            "localhost",
+            "127.0.0.1",
+            "fake-provider",
+        }:
+            raise ValueError("Remote AI endpoints require HTTPS")
+        return value
+
     DATABASE_URL: PostgresDsn
 
     @field_validator("DATABASE_URL", mode="before")

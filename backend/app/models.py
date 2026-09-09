@@ -131,3 +131,12 @@ class TokenPayload(SQLModel):
 class NewPassword(SQLModel):
     token: str
     new_password: str = Field(min_length=8, max_length=128)
+
+
+# Register Avrixo tables with the shared SQLModel metadata.
+from app.operations.models import (  # noqa: E402, F401
+    AIExecution,
+    AIWorkflow,
+    Workspace,
+    WorkspaceMember,
+)
